@@ -63,12 +63,13 @@
             .col-lg-4.col-md-6.mb-4
               .card.h-100
                 %a{:href => "#"}
-                  %img.card-img-top{:alt => "", :src => "http://placehold.it/700x400"}/
+                  -# %img.card-img-top{:alt => "", src: "/images/cat001.jpg"}/
+                  = image_tag "cat001.jpg", size: "700x400"
                 .card-body
                   %h4.card-title
-                    %a{:href => "#"} Item One
+                    %a{href: post_path(@post)} @post.title
                   %h5 $24.99
-                  %p.card-text Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!
+                  %p.card-text #{@post.name} #{@post.lost_place} #{@post.lost_date}
                 .card-footer
                   %small.text-muted ★ ★ ★ ★ ☆
             .col-lg-4.col-md-6.mb-4
