@@ -12,8 +12,8 @@
     / /.col-lg-3
     .col-lg-9.mt-4
       .row
-        .col-lg-4.col-md-6.mb-4
-          = render "post"
+
+        = render @posts
         .col-lg-4.col-md-6.mb-4
           .card.h-100
             %a{:href => "#"}
@@ -79,5 +79,3 @@
     %p.m-0.text-center.text-white Copyright © Your Website 2019
   / /.container
 / Bootstrap core JavaScript
-%script{:src => "vendor/jquery/jquery.min.js"}
-%script{:src => "vendor/bootstrap/js/bootstrap.bundle.min.js"}
