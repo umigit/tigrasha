@@ -40,38 +40,10 @@
             %a.list-group-item{:href => "#"} Category 2
             %a.list-group-item{:href => "#"} Category 3
         / /.col-lg-3
-        .col-lg-9
-          #carouselExampleIndicators.carousel.slide.my-4{"data-ride" => "carousel"}
-            %ol.carousel-indicators
-              %li.active{"data-slide-to" => "0", "data-target" => "#carouselExampleIndicators"}
-              %li{"data-slide-to" => "1", "data-target" => "#carouselExampleIndicators"}
-              %li{"data-slide-to" => "2", "data-target" => "#carouselExampleIndicators"}
-            .carousel-inner{:role => "listbox"}
-              .carousel-item.active
-                %img.d-block.img-fluid{:alt => "First slide", :src => "http://placehold.it/900x350"}/
-              .carousel-item
-                %img.d-block.img-fluid{:alt => "Second slide", :src => "http://placehold.it/900x350"}/
-              .carousel-item
-                %img.d-block.img-fluid{:alt => "Third slide", :src => "http://placehold.it/900x350"}/
-            %a.carousel-control-prev{"data-slide" => "prev", :href => "#carouselExampleIndicators", :role => "button"}
-              %span.carousel-control-prev-icon{"aria-hidden" => "true"}
-              %span.sr-only Previous
-            %a.carousel-control-next{"data-slide" => "next", :href => "#carouselExampleIndicators", :role => "button"}
-              %span.carousel-control-next-icon{"aria-hidden" => "true"}
-              %span.sr-only Next
+        .col-lg-9.mt-4
           .row
             .col-lg-4.col-md-6.mb-4
-              .card.h-100
-                %a{:href => "#"}
-                  -# %img.card-img-top{:alt => "", src: "/images/cat001.jpg"}/
-                  = image_tag "cat001.jpg", size: "700x400"
-                .card-body
-                  %h4.card-title
-                    %a{href: post_path(@post)} @post.title
-                  %h5 $24.99
-                  %p.card-text #{@post.name} #{@post.lost_place} #{@post.lost_date}
-                .card-footer
-                  %small.text-muted ★ ★ ★ ★ ☆
+              = render "post"
             .col-lg-4.col-md-6.mb-4
               .card.h-100
                 %a{:href => "#"}
