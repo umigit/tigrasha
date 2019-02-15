@@ -1,31 +1,5 @@
 / Navigation
-%nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
-  .container
-    %a.navbar-brand{href: root_path} Tigrasha
-    %button.navbar-toggler{"aria-controls" => "navbarResponsive", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarResponsive", "data-toggle" => "collapse", :type => "button"}
-      %span.navbar-toggler-icon
-    - if user_signed_in?
-      #navbarResponsive.collapse.navbar-collapse
-        %ul.navbar-nav.ml-auto
-          %li.nav-item.active
-            %a.nav-link{:href => "#"}
-              Home
-              %span.sr-only (current)
-          %li.nav-item
-            %a.nav-link{href: user_path(current_user)} #{current_user.name}
-          %li.nav-item
-            %a.nav-link{href: destroy_user_session_path} ログアウト
-    - else
-      #navbarResponsive.collapse.navbar-collapse
-        %ul.navbar-nav.ml-auto
-          %li.nav-item.active
-            %a.nav-link{:href => "#"}
-              Home
-              %span.sr-only (current)
-          %li.nav-item
-            %a.nav-link{href: new_user_registration_path} 新規登録
-          %li.nav-item
-            %a.nav-link{href: new_user_session_path} ログイン
+= render "/layouts/navbar"
 / Page Content
 .container
   .row
