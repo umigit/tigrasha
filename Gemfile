@@ -63,5 +63,3 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'haml-rails'
-gem 'jquery-rails'
-gem 'bootstrap', '~> 4.3.1'
