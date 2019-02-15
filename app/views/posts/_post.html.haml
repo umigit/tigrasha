@@ -1,0 +1,13 @@
+.card.h-100
+  %a{:href => "#"}
+    -# %img.card-img-top{:alt => "", src: "/images/cat001.jpg"}/
+    = image_tag "cat001.jpg", class: "card-img-top"
+  .card-body
+    %h4.card-title
+      %a{href: post_path(@post)}= @post.title
+    %h5 #{@post.lost_place}
+    %h6 お名前: #{@post.name}
+    %h6 失踪日: #{@post.lost_date}
+    %p.card-text
+  .card-footer
+    %small.text-muted ★ ★ ★ ★ ☆
