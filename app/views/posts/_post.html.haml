@@ -1,11 +1,10 @@
 .col-lg-4.col-md-6.mb-4
   .card.h-100
-    .image-box.p-2
+    %h5.card-title.text-center.mt-2.mb-0
+      %a{href: post_path(post)}= post.title
     - if post.image.attached?
-      = image_tag post.image, class: "card-img-top"
-    .card-body
-      %h5.card-title
-        %a{href: post_path(post)}= post.title
-      %h6= post.lost_place
-      %p.m-0 お名前: #{post.name}
-      %p.m-0 #{post.lost_date.strftime("%Y年 %-m月 %-d日")}
+      = image_tag post.image, class: "img-thumbnail"
+      .card-body
+        %p.m-0 場所: #{post.lost_place}
+        %p.m-0 お名前: #{post.name}
+        %p.m-0 #{post.lost_date.strftime("%Y年 %-m月 %-d日")}

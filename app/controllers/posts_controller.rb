@@ -1,6 +1,11 @@
 class PostsController < ApplicationController
+  before_action :set_post, except: [:index, :new, :create]
+
   def index
     @posts = Post.includes(:user)
+  end
+
+  def show
   end
 
   def new
@@ -8,12 +13,30 @@ class PostsController < ApplicationController
   end
 
   def create
-    Post.create(post_params)
+    @post = Post.new(post_params)
+    if @post.save
+      redirect_to post_path(@post)
+    else
+      render :new
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @post
+      redirect_to post_path(@post)
+    end
   end
 
   private
 
   def post_params
     params.require(:post).permit(:title, :image, :name, :lost_place, :lost_date, :address, :detail).merge(user_id: current_user.id)
+  end
+
+  def set_post
+    @post = Post.find(params[:id])
   end
 end
