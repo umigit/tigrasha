@@ -1,9 +1,9 @@
 = render "/layouts/navbar"
-.bg-image--gray-wall
-  .container
+.bg-gray-wall
+  .container.container__main
     .row
       .col-12.col-lg-8.mx-auto.my-5
-        .card.h-100
+        .card.bg-paper
           .card-body
             %h1.card-title.text-center.my-1= @post.title
             - if @post.image.attached?

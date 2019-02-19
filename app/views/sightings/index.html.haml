@@ -1,0 +1,20 @@
+= render "/layouts/navbar"
+.bg-image--wood
+  .container-fruid.search.bg-light
+    .container
+      .row
+        .col-sm-6.col-lg-8.mx-auto
+          .search-box
+            = form_with model: @sightings, method: :get do |f|
+              = f.text_field :search, class: "form-control my-3"
+              //= f.collection_check_boxes :sightings, Sightings.all
+              = f.submit "検索", class: "btn btn-primary btn-block"
+  .container.container__main
+    .row
+      .col-lg-12.mt-4
+        .row
+           = render @sightings
+    .footer.fixed-bottom
+      .container
+        = button_to "情報提供する", new_sighting_path, method: :get, class: "nav-item btn btn-primary mb-2 mr-2 float-right"
+
