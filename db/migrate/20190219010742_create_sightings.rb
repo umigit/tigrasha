@@ -1,7 +1,7 @@
 class CreateSightings < ActiveRecord::Migration[5.2]
   def change
     create_table :sightings do |t|
-      t.strigng :plase, null: false, default: ""
+      t.string :plase, null: false, default: ""
       t.datetime :date, null: false, default: -> {'NOW()'}
       t.string :address
       t.references :post
