@@ -1,12 +1,18 @@
 .bg-image {
-
+  min-height: calc(100vh - 56px);
+  max-width: 100vw;
+  box-sizing: border-box;
   &--gray-wall {
     min-height: calc(100vh - 56px);
     background:url(gray-wall.jpg) center no-repeat; background-size: cover;
   }
 
   &--wood {
-    min-height: calc(100vh - 56px);
+
     background:url(wood.jpg) center no-repeat; background-size: cover;
   }
+}
+
+.sidebar {
+  height: calc(100vh - 56px);
 }
