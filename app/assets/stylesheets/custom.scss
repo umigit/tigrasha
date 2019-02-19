@@ -1,0 +1,12 @@
+.bg-image {
+
+  &--gray-wall {
+    min-height: calc(100vh - 56px);
+    background:url(gray-wall.jpg) center no-repeat; background-size: cover;
+  }
+
+  &--wood {
+    min-height: calc(100vh - 56px);
+    background:url(wood.jpg) center no-repeat; background-size: cover;
+  }
+}
