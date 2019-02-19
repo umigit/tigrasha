@@ -6,3 +6,23 @@
 h5 {
   font-size: 1.2rem;
 }
+
+.img-thumbnail {
+    border: 0 none;
+    box-shadow: none;
+    padding: 0.5rem;
+}
+
+body {
+  min-height: 100vh;
+  padding: 0;
+}
+
+.nav-margin {
+  height: 56px;
+}
+
+.gray-wall {
+  min-height: 100vh;
+  background:url(gray-wall.jpg) center no-repeat; background-size: cover;
+}

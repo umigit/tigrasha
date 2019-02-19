@@ -1,0 +1,24 @@
+= render "/layouts/navbar"
+.container
+  .row
+    .col-12.col-lg-8.mx-auto.my-5
+      .card.h-100
+        .card-body
+          %h1.card-title.text-center.my-1= @post.title
+          - if @post.image.attached?
+            = image_tag @post.image, class: "img-thumbnail"
+            .card-text.pl-3.mt-3
+              .row.mb-3
+                .col-4.col-md-3
+                  %h5 場所:
+                  %h5 お名前:
+                  %h5 いつから:
+                  %h5 詳細:
+                .col-auto
+                  %h5= @post.lost_place
+                  %h5= @post.name
+                  %h5= @post.lost_date.strftime("%Y年 %-m月 %-d日")
+                  %p= @post.detail
+              = link_to "編集", edit_post_path(@post), class: "card-link"
+              = link_to "削除", "/posts/#{@post.id})", method: :delete, class: "card-link"
+
