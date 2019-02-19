@@ -1,0 +1,24 @@
+= render "/layouts/navbar"
+.bg-image.bg-wood
+  .container.container__main
+    .row
+      .col-lg-6.col-md-8.mx-auto
+        .card.my-3
+          .card-body
+            %h1.text-center 目撃情報
+            %hr
+            = form_with model: Sighting.new, local: true do |f|
+              .form-group.hidden
+                = f.label :写真
+                %br/
+                = f.file_field :image, class: "form-control-file"
+              .form-group
+                = f.label :"みかけた場所"
+                %br/
+                = f.text_field :place, class: "form-control"
+              .form-group
+                = f.label :詳細
+                %br/
+                = f.text_area :detail, class: "form-control", rows: 4
+              .form-group
+                = f.submit "情報提供する", class: "btn btn-primary btn-block btn-lg"

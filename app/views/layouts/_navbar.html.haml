@@ -14,9 +14,9 @@
               = link_to "マイページ", user_path(current_user), class: 'dropdown-item'
               = link_to "ログアウト", destroy_user_session_path, method: :delete, class: "dropdown-item"
           %li.nav-item
-            %a.nav-link{href: new_post_path} 張り紙
+            %a.nav-link{href: posts_path} 張り紙
           %li.nav-item
-            %a.nav-link{href: new_user_session_path} 目撃情報
+            %a.nav-link{href: sightings_path} 目撃情報
           %li.nav-item.d-block.d-lg-none
             = link_to "マイページ", user_path(current_user), class: 'nav-link '
           %li.nav-item.d-block.d-lg-none
@@ -25,7 +25,7 @@
       #navbarResponsive.collapse.navbar-collapse
         %ul.navbar-nav.ml-auto
           %li.nav-item
-            %a.nav-link{href: new_user_session_path} 張り紙
+            %a.nav-link{href: posts_path} 張り紙
           %li.nav-item
-            %a.nav-link{href: new_user_session_path} 目撃情報
+            %a.nav-link{href: sightings_path} 目撃情報
 .nav-margin

@@ -8,6 +8,7 @@ h5 {
 }
 
 .img-thumbnail {
+  background-color: transparent;
     border: 0 none;
     box-shadow: none;
     padding: 0.5rem;
@@ -22,7 +23,3 @@ body {
   height: 56px;
 }
 
-.gray-wall {
-  min-height: 100vh;
-  background:url(gray-wall.jpg) center no-repeat; background-size: cover;
-}

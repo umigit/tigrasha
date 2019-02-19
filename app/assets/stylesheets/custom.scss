@@ -1,0 +1,25 @@
+.container {
+  &__main {
+  min-height: calc(100vh - 56px);
+  }
+  &--search-result {
+  min-height: calc(100vh - 56px - 200px);
+  }
+}
+
+  .bg-gray-wall {
+    background:url(gray-wall.jpg) center no-repeat; background-size: cover;
+  }
+
+  .bg-wood {
+    background:url(wood.jpg) center no-repeat; background-size: cover;
+  }
+
+  .bg-paper {
+    background:url(paper.jpg) center no-repeat; background-size: cover;
+  }
+
+
+.sidebar {
+  height: calc(100vh - 56px);
+}
