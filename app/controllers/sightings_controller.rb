@@ -1,4 +1,9 @@
 class SightingsController < ApplicationController
+  before_action :set_sighting
+  def index
+    @sithtings = Sighting.all
+  end
+
   def new
     @sighting = Sighting.new
   end
