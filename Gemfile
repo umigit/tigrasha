@@ -70,4 +70,5 @@ gem 'devise'
 gem 'mini_magick'
 gem 'ransack'
 gem 'gmaps4rails'
+gem 'geocoder'
 
