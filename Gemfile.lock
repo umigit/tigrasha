@@ -98,6 +98,7 @@ GEM
     ffi (1.9.25)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    gmaps4rails (2.1.2)
     haml (5.0.4)
       temple (>= 0.8.0)
       tilt
@@ -270,6 +271,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   devise
   dotenv-rails
+  gmaps4rails
   haml-rails
   jbuilder (~> 2.5)
   jquery-rails

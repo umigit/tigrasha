@@ -69,4 +69,5 @@ gem 'bootstrap', '~> 4.3.1'
 gem 'devise'
 gem 'mini_magick'
 gem 'ransack'
+gem 'gmaps4rails'
 
