@@ -15,7 +15,7 @@
               .form-group.hidden
                 = f.label :お写真
                 %br/
-                = f.file_field :image, class: "form-control-file"
+                = f.file_field :image, class: "form-control-file", id: "imageFile"
               .form-group
                 = f.label :お名前
                 %br/
@@ -24,6 +24,10 @@
                 = f.label :"いなくなった場所・最後に見た場所"
                 %br/
                 = f.text_field :lost_place, class: "form-control"
+              .form-group
+                = f.label :"詳しい場所"
+                %br/
+                = f.text_field :address, class: "form-control", id: "addressField"
               .form-group
                 = f.label :詳細
                 %br/
