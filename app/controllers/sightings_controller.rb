@@ -21,7 +21,7 @@ class SightingsController < ApplicationController
   private
 
   def sighting_params
-    params.require(:sighting).permit(:detail, :image, :place, :date).merge(user_id: current_user.id)
+    params.require(:sighting).permit(:detail, :image, :place, :date, :address).merge(user_id: current_user.id)
   end
 
   def set_sighting
