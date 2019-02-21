@@ -10,9 +10,8 @@ function moveMapToLocation(latitude, longitude){
 function InitializeGoogleMap(){
   var position = {lat: 35.0, lng:135.0};
   var zoom = 4;
-  if (($("#map").data("location"))){
-    var data = $("#map").data("location").split(",");
-    position = {lat: Number(data[0]), lng: Number(data[1])};
+  if (($("#map").data("latitude") && $("#map").data("longitude"))){
+    position = {lat: $("#map").data("latitude"), lng: $("#map").data("longitude")};
     zoom = 14;
   }
 
@@ -92,8 +91,9 @@ function InitializeGoogleMap(){
             var longitude = longitudeArray[0] + longitudeArray[1] / 60 + longitudeArray[2] / 3600;
             location = {lat: latitude, lng: longitude};
             console.log(location);
-            $("#search-box").val(latitude.toString() + "," + longitude.toString());
-            $("#locationField").val(latitude.toString() + "," + longitude.toString());
+            $("#search-box").val("");
+            $("#latitudeField").val(latitude);
+            $("#longitudeField").val(longitude);
 
             marker.setMap(null);
             marker = new google.maps.Marker({
@@ -107,7 +107,8 @@ function InitializeGoogleMap(){
         });
       }
       else{
-        $("#locationField").val("");
+        $("#latutudeField").val(35.0);
+        $("#longitudeField").val(135.0);
       }
     });
   }

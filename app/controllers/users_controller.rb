@@ -3,6 +3,9 @@ class UsersController < ApplicationController
     @user = User.find(current_user.id)
   end
 
+  def new
+  end
+
   def destroy
     redirect_to root_path
   end
