@@ -8,18 +8,21 @@
             %h1.card-title.text-center.my-1= @post.title
             - if @post.image.attached?
               = image_tag @post.image, class: "img-thumbnail"
-              .card-text.pl-3.mt-3
+              .card-text
                 .row.mb-3
                   .col-4.col-md-3
                     %h5 場所:
                     %h5 お名前:
                     %h5 いつから:
                     %h5 詳細:
-                  .col-auto
+                    - if @post.address.present?
+                      %h5 地図:
+                  .col-8.col-md-8
                     %h5= @post.lost_place
                     %h5= @post.name
                     %h5= @post.lost_date.strftime("%Y年 %-m月 %-d日")
                     %p= @post.detail
+                #map.mb-2{"data-location": @post.location}
                 = link_to "編集", edit_post_path(@post), class: "card-link"
                 = link_to "削除", "/posts/#{@post.id})", method: :delete, class: "card-link"
 

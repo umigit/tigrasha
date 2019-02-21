@@ -3,7 +3,7 @@
   .container.container__main
     .row
       .col-lg-6.col-md-8.mx-auto
-        .card.my-3
+        .card.my-3.bg-paper
           .card-body
             %h1.text-center 目撃情報
             %hr
@@ -11,18 +11,20 @@
               .form-group.hidden
                 = f.label :写真
                 %br/
-                = f.file_field :image, class: "form-control-file", id: "imageFile"
+                = f.file_field :image, class: "form-control-file", id: "imageFile", autofocus: true
               .form-group
                 = f.label :"みかけた場所"
                 %br/
                 = f.text_field :place, class: "form-control"
               .form-group
-                = f.label :"詳しい場所"
-                %br/
-                = f.text_field :address, class: "form-control", id: "addressField"
-              .form-group
                 = f.label :詳細
                 %br/
                 = f.text_area :detail, class: "form-control", rows: 4
               .form-group
-                = f.submit "情報提供する", class: "btn btn-primary btn-block btn-lg"
+                = f.label :"地図"
+                %br/
+                = f.text_field :location, class: "form-control", id: "locationField"
+                %input#search-box.form-control{type: "text"}
+              #map.mb-4{"data-location": ""}
+              .form-group
+                = f.submit "情報提供する", class: "btn btn-primary btn-block btn-lg", type: "button", onclick: "submit();"

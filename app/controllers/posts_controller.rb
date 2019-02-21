@@ -30,10 +30,15 @@ class PostsController < ApplicationController
     end
   end
 
+  def destroy
+    @post.destroy
+    redirect_to root_path
+  end
+
   private
 
   def post_params
-    params.require(:post).permit(:title, :image, :name, :lost_place, :lost_date, :address, :detail).merge(user_id: current_user.id)
+    params.require(:post).permit(:title, :image, :name, :lost_place, :lost_date, :address, :location, :detail).merge(user_id: current_user.id)
   end
 
   def set_post

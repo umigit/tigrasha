@@ -2,8 +2,8 @@
 .bg-image.bg-gray-wall
   .container.container__main
     .row
-      .col-lg-6.col-md-8.mx-auto
-        .card.my-3
+      .col-md-8.mx-auto
+        .card.my-3.bg-paper
           .card-body
             %h1.text-center 張り紙
             %hr
@@ -25,12 +25,14 @@
                 %br/
                 = f.text_field :lost_place, class: "form-control"
               .form-group
-                = f.label :"詳しい場所"
-                %br/
-                = f.text_field :address, class: "form-control", id: "addressField"
-              .form-group
                 = f.label :詳細
                 %br/
                 = f.text_area :detail, class: "form-control", rows: 3
               .form-group
-                = f.submit "張り紙をする", class: "btn btn-primary btn-block btn-lg"
+                = f.label :"地図"
+                %br/
+                = f.text_field :location, class: "form-control d-none", id: "locationField"
+                %input#search-box.form-control{type: "text"}
+              #map.mb-4
+              .form-group
+                = f.submit "張り紙をする", class: "btn btn-primary btn-block btn-lg", type: "button", onclick: "submit();"
