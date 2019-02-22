@@ -5,10 +5,10 @@
       .row
         .col-lg-8.mx-auto
           .search-box.my-3
-            = form_with model: Sighting.new, method: :get, local: true do |f|
-              = f.text_field :keyword, class: "form-control my-3", required: true
+            = form_with model: Sighting.new, method: :get, class: "search__form" do |f|
+              = f.text_field :keyword, class: "form-control my-3 search__form__input", required: true
               //= f.collection_check_boxes :sightings, Sightings.all
-              = f.submit "検索", class: "btn btn-primary btn-block sightings__search__button"
+              = f.submit "検索", class: "btn btn-primary btn-block search__form__submit"
   .bg-wood
     .container.container__search-result
       .row
