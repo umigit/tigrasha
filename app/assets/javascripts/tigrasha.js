@@ -30,7 +30,8 @@ function InitializeGoogleMap(){
       map: map
     });
     map.panTo(e.latLng);
-    $("#locationField").val(e.latLng.toUrlValue());
+    $("#latitudeField").val(e.latLng.lat);
+    $("#longitudeField").val(e.latLng.lng);
   });
 
   if ($("#search-box").length){
