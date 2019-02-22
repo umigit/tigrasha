@@ -5,5 +5,5 @@ class Sighting < ApplicationRecord
   reverse_geocoded_by :latitude, :longitude
   validates :place, presence: true
   after_validation :geocode, if: ->(obj){ obj.address.present? and obj.address_changed? }
-  after_validation :reverse_geocode
+  after_validation :reverse_geocode, if: ->(obj){ obj.latitude.present? and obj.latitude_changed? }
 end
