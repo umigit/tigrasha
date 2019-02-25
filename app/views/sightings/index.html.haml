@@ -14,8 +14,6 @@
       .row
         .col-lg-12.mt-4
           .row#search-result
-            - if @sightings.present?
-              = render @sightings
       .footer.fixed-bottom
         .container
           = button_to "情報提供する", new_sighting_path, method: :get, class: "nav-item btn btn-primary mb-2 mr-2 float-right"

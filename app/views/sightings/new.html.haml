@@ -23,8 +23,13 @@
               .form-group
                 = f.label :"地図"
                 %br/
+                -# = f.label :"address"
+                -# = f.text_field :address, class: "form-control", id: "addressField"
+                = f.label :"latitude(debug)"
                 = f.text_field :latitude, class: "form-control", id: "latitudeField"
+                = f.label :"longitude(debug)"
                 = f.text_field :longitude, class: "form-control", id: "longitudeField"
+                %br/
                 %input#search-box.form-control{type: "text"}
               #map.mb-4{"data-location": ""}
               .form-group

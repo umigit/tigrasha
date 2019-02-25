@@ -1,0 +1,9 @@
+= render "/layouts/navbar"
+.bg-wood
+  .container.container__main
+    .row
+      .col-12.col-lg-8.mx-auto.my-5
+        .card.bg-paper
+          .card-body
+            - if @sighting.image.attached?
+              = image_tag @sighting.image, class: "img-thumbnail", "data-lat": @sighting.latitude, "data-lng": @sighting.longitude

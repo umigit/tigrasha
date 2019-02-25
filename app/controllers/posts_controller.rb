@@ -6,6 +6,12 @@ class PostsController < ApplicationController
   end
 
   def show
+    @sightings = Sighting.near([@post.latitude, @post.longitude], 5)
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def new
@@ -27,6 +33,8 @@ class PostsController < ApplicationController
   def update
     if @post.update(post_params)
       redirect_to post_path(@post)
+    else
+      render :edit
     end
   end
 

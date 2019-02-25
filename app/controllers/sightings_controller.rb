@@ -1,11 +1,16 @@
 class SightingsController < ApplicationController
   before_action :set_sighting
+
   def index
     if params[:sighting].present?
       @sightings = Sighting.ransack(place_or_detail_or_address_matches: "%#{params[:sighting][:keyword]}%").result
 
       render @sightings
     end
+  end
+
+  def show
+    @sighting = Sighting.find(params[:id])
   end
 
   def new

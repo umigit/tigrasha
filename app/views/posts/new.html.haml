@@ -7,6 +7,11 @@
           .card-body
             %h1.text-center 張り紙
             %hr
+            - if @post.errors.any?
+              .alert.alert-primary.pt-0
+                %ul
+                - @post.errors.full_messages.each do |message|
+                  %li= message
             = form_with model: @post do |f|
               .form-group
                 = f.label :タイトル
