@@ -1,0 +1,9 @@
+$(function(){
+  $(document).on("ajax:success", ".search__form", function(event) {
+    console.log('index.js.erb');
+
+    $("#search-result").html(event.detail[2].response);
+  });
+});
+
+

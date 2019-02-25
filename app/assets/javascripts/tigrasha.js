@@ -8,6 +8,7 @@ function moveMapToLocation(latitude, longitude){
 }
 
 function InitializeGoogleMap(){
+  console.log('initialzing googlemap');
   var position = {lat: 35.0, lng:135.0};
   var zoom = 4;
   if (($("#map").data("latitude") && $("#map").data("longitude"))){
@@ -19,19 +20,20 @@ function InitializeGoogleMap(){
   $("#map").height($("#map").width());
   map = new google.maps.Map($("#map")[0], {center: position, zoom: zoom});
 
-  var marker = new google.maps.Marker({position: position, map: map});
+  var marker = new google.maps.Marker({position: position, map: map, draggable: true});
+  markers.push(marker);
 
 
-  map.addListener('click', function(e){
-    console.log(e.latLng);
-    marker.setMap(null);
-    marker = new google.maps.Marker({
-      position: e.latLng,
-      map: map
-    });
+  var infowindow = new google.maps.InfoWindow();
+
+  marker.addListener('dragend', function(e){
     map.panTo(e.latLng);
     $("#latitudeField").val(e.latLng.lat);
     $("#longitudeField").val(e.latLng.lng);
+  });
+
+  marker.addListener('click', function(e){
+    infowindow.open(map, this);
   });
 
   if ($("#search-box").length){
@@ -64,6 +66,19 @@ function InitializeGoogleMap(){
           anchor: new google.maps.Point(17, 34),
           scaledSize: new google.maps.Size(25, 25)
         };
+
+        marker = new google.maps.Marker({position: place.geometry.location, map: map, draggable: true});
+        console.log(place.geometry.location.lat);
+        $("#latitudeField").val(place.geometry.location.lat);
+        $("#longitudeField").val(place.geometry.location.lng);
+
+        marker.addListener('dragend', function(e){
+          map.panTo(e.latLng);
+          $("#latitudeField").val(e.latLng.lat);
+          $("#longitudeField").val(e.latLng.lng);
+        });
+
+        markers.push(marker);
 
         if (place.geometry.viewport) {
           // Only geocodes have viewport.
