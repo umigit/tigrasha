@@ -17,7 +17,11 @@
                 = f.label :タイトル
                 %br/
                 = f.text_field :title, class: "form-control"
-              .form-group.hidden
+              .image-box.text-center.mb-2
+                = image_tag "cat_default.png", class: "img-thumbnail"
+                .image-mask
+                  = image_tag "no_image_small.png"
+              .form-group.d-none
                 = f.label :お写真
                 %br/
                 = f.file_field :image, class: "form-control-file", id: "imageFile"
@@ -42,3 +46,13 @@
               #map.mb-4
               .form-group
                 = f.submit "張り紙をする", class: "btn btn-primary btn-block btn-lg", type: "button", onclick: "submit();"
+  .modal.modal__trim#trimmingModal{role: "dialog"}
+    .modal-dialog
+      .modal-content.p-3
+        .modal-header
+        .modal-body
+          = image_tag "", class: "image-trimming"
+        .modal-footer
+          %button.btn.btn-secondary.btn-trimming-back 戻る
+          %button.btn.btn-primary.btn-trimming-confirm 決定
+
