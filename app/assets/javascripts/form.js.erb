@@ -1,0 +1,40 @@
+$(function () {
+  $(".image-box").on('click', function(event) {
+    event.preventDefault();
+    $("#imageFile").click();
+  });
+
+  $("#imageFile").on('change', function(event) {
+    if ($("#imageFile")[0].files[0] === undefined){
+      $(".img-thumbnail").attr("src", "<%= image_path('cat_default.png') %>");
+      return false;
+    }
+
+    $("#trimmingModal").modal();
+    console.log($("#imageFile")[0].files[0]);
+    var image = $("#imageFile")[0].files[0];
+    var reader = new FileReader();
+    reader.onload = function(e){
+      // $(".img-thumbnail").attr("src", e.target.result);
+      $(".image-trimming").attr("src", e.target.result);
+    };
+    reader.readAsDataURL(image);
+  });
+
+  $(".modal").on('shown.bs.modal', function() {
+    const2 image = $(".image-trimming")[0];
+    console.log('shown.bs.modal');
+    console.log(image);
+    var options = {aspectRatio: 1 / 1,
+                      dragMode: 'move'};
+    const cropper = new Cropper(image, options);
+    console.log(cropper);
+    $(".btn-trimming-confirm").one('click', function(event) {
+      var result = cropper.getCroppedCanvas({width: 100, height: 100});
+      console.log(result);
+      $(".img-thumbnail").attr("src", result.toDataURL());
+      cropper.destroy();
+      $("#trimmingModal").modal(hide);
+    });
+  });
+});
