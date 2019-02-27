@@ -46,11 +46,11 @@
               #map.mb-4
               .form-group
                 = f.submit "張り紙をする", class: "btn btn-primary btn-block btn-lg", type: "button", onclick: "submit();"
-  .modal.modal__trim#trimmingModal{role: "dialog"}
+  .modal.modal__trim#trimmingModal{role: "dialog", "data-keyboard": false, "data-backdrop": "static"}
     .modal-dialog
-      .modal-content.p-3
+      .modal-content.px-3
         .modal-header
-        .modal-body
+        .modal-body.px-0
           = image_tag "", class: "image-trimming"
         .modal-footer
           %button.btn.btn-secondary.btn-trimming-back 戻る

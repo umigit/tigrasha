@@ -46,11 +46,19 @@ body {
     opacity: 1;
   }
 }
-
+.modal-dialog {
+  box-sizing: content-box;
+}
+.modal-content {
+  box-sizing: content-box;
+}
+.modal-body {
+  box-sizing: content-box;
+}
 .image-trimming {
-  width: 100%;
+  box-sizing: content-box;
+  max-width: 100%;
+  height: auto;
 }
 
-.modal {
-  width: 100%;
-}
+
