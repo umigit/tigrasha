@@ -1,0 +1,10 @@
+$(function () {
+  $(document).on('ajax:success', '#sightingsLink', function(event) {
+    $(".mypage__result").html(event.detail[2].response);
+  });
+
+  $(document).on('ajax:success', '#postsLink', function(event) {
+    console.log(event.detail);
+    $(".mypage__result").html(event.detail[2].response);
+  });
+});

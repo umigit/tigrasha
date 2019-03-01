@@ -46,19 +46,36 @@ body {
     opacity: 1;
   }
 }
+
+.modal {
+  box-sizing: border-box;
+  max-height: 100vh;
+  max-width: 100vw;
+}
 .modal-dialog {
   box-sizing: content-box;
 }
 .modal-content {
   box-sizing: content-box;
+
+  width: auto;
+  max-width: 400px;
+  margin: 20px auto;
 }
 .modal-body {
   box-sizing: content-box;
 }
+
+.modal-footer {
+  box-sizing: content-box;
+  height: 100%;
+}
 .image-trimming {
   box-sizing: content-box;
   max-width: 100%;
-  height: auto;
+  max-height: 100%;
+  // height: 100%;
+  // width: auto;
 }
 
 

@@ -5,6 +5,7 @@ $(function () {
   });
 
   $("#imageFile").on('change', function(event) {
+    console.log('image file changed');
     if ($("#imageFile")[0].files[0] === undefined){
       $(".img-thumbnail").attr("src", "<%= image_path('cat_default.png') %>");
       return false;
@@ -23,23 +24,110 @@ $(function () {
     reader.readAsDataURL(image);
   });
 
-  $(".modal").on('shown.bs.modal', function() {
+  var blob = null;
+  function blobing(croppedCanvas){
+    if (croppedCanvas && croppedCanvas.toBlob){
+      croppedCanvas.toBlob(function(b){
+        blob = b;
+      });
+    }else if(croppedCanvas && croppedCanvas.msToBlob){
+      blob = croppedCanvas.msToBlob();
+    }else{
+      blob = null;
+    }
+  }
+
+  $(document).on('shown.bs.modal', ".modal", function() {
     var image = $(".image-trimming")[0];
     console.log('shown.bs.modal');
     // console.log(image);
     var options = {aspectRatio: 4 / 3,
                       dragMode: 'move',
-                      crop: function(e) {
-                        console.log(e);
-                      }};
-    const cropper = new Cropper(image, options);
+                      zoomable: false
+                  };
+    var cropper = new Cropper(image, options);
     // console.log(cropper);
-    $(".btn-trimming-confirm").one('click', function(event) {
-      var result = cropper.getCroppedCanvas({maxWidth: 4096, maxHeight: 4096});
-      console.log(result);
-      $(".img-thumbnail").attr("src", result.toDataURL());
-      cropper.destroy();
+    $(document).one('click', ".btn-trimming-confirm", function(event) {
+      var result;
+      $.when(
+          //ちょっと時間かかるっぽい
+          result = cropper.getCroppedCanvas({maxWidth: 1200, maxHeight: 1200})
+        ).done(function(){
+          blobing(result);
+          $(".img-thumbnail").attr("src", result.toDataURL());
+          $("#trimmingModal").modal('hide');
+        });
+    });
+
+    $(document).one('click', ".btn-trimming-back", function(event) {
       $("#trimmingModal").modal('hide');
     });
+
+    $(this).one('hidden.bs.modal', function(event) {
+      cropper.destroy();
+    });
+  });
+
+  $(document).on('click', "#postSubmitButton", function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    $("#postSubmitButton").prop('disabled', true);
+    console.log('submit clicked');
+
+    $.ajaxPrefilter(function(options, originalOptions, jqXHR){
+      var token;
+      if (!options.crossDomain){
+        token = $('meta[name="csrf-token"]').attr('content');
+
+        if (token){
+          return jqXHR.setRequestHeader('X-CSRF-Token', token);
+        }
+      }
+    });
+    console.log($("[name=_method]").val());
+    var formData = new FormData();
+    console.log("blob: " + blob);
+    if (blob != null){
+      formData.append("post[image]", blob);
+    }
+    formData.append("post[title]", $("#titleField").val());
+    formData.append("post[name]", $("#nameField").val());
+    formData.append("post[lost_place]", $("#placeField").val());
+    formData.append("post[detail]", $("#detailField").val());
+    formData.append("post[latitude]", $("#latitudeField").val());
+    formData.append("post[longitude]", $("#longitudeField").val());
+    for(item of formData) console.log(item);
+    var url = $("#postForm").attr('action');
+    var type = 'POST';
+    if ($("[name=_method]").length){
+      console.log('edit');
+      type = $("[name=_method]").val();
+    }
+
+    $.ajax({
+      url: url,
+      type: type,
+      dataType: 'json',
+      data: formData,
+      processData: false,
+      contentType: false
+    })
+    .done(function(post) {
+      console.log("success");
+      console.log(post);
+      $("#postForm")[0].reset();
+      window.location = "/posts/" + post.id;
+    })
+    .fail(function(XMLHttpRequest, textStatus, errorThrown) {
+      console.log("error");
+      console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+      console.log("textStatus     : " + textStatus);
+      console.log("errorThrown    : " + errorThrown.message);
+      $("#postSubmitButton").prop('disabled', false);
+    })
+    .always(function() {
+      console.log("complete");
+    });
+
   });
 });

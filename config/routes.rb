@@ -3,5 +3,7 @@ Rails.application.routes.draw do
   root 'posts#index'
   resources :posts
   resources :users, only: [:show]
+    get 'users/:id/sightings' => 'users#sightings'
+    get 'users/:id/posts' => 'users#posts'
   resources :sightings
 end

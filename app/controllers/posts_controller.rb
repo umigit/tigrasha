@@ -21,7 +21,9 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     if @post.save
-      redirect_to post_path(@post)
+      respond_to do |format|
+        format.js {render json: @post}
+      end
     else
       render :new
     end
@@ -32,7 +34,9 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      redirect_to post_path(@post)
+      respond_to do |format|
+        format.js {render json: @post}
+      end
     else
       render :edit
     end
