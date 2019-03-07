@@ -19,21 +19,38 @@ class SightingsController < ApplicationController
   def create
     @sighting = Sighting.new(sighting_params)
     if @sighting.save
-      redirect_to sightings_path
+      respond_to  do |format|
+        format.js {render json: @sighting}
+      end
     else
       render :new
     end
   end
 
+  def upload
+    @image = Image.new(image_params)
+    @image.save
+  end
+
   def destroy
     @sighting = Sighting.find(params[:id])
     @sighting.destroy
+
+    respond_to do |format|
+      format.html
+      format.json {render json: @sighting, only: ["id"]}
+      format.js {render json: @sighting, only: ["id"]}
+    end
   end
 
   private
 
   def sighting_params
     params.require(:sighting).permit(:detail, :image, :place, :date, :address, :latitude, :longitude).merge(user_id: current_user.id)
+  end
+
+  def image_params
+    params.requre(:image).permit[:url]
   end
 
   def set_sighting

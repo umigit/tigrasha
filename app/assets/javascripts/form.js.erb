@@ -25,6 +25,7 @@ $(function () {
   });
 
   var blob = null;
+  var image = null;
   function blobing(croppedCanvas){
     if (croppedCanvas && croppedCanvas.toBlob){
       croppedCanvas.toBlob(function(b){
@@ -54,7 +55,10 @@ $(function () {
           result = cropper.getCroppedCanvas({maxWidth: 1200, maxHeight: 1200})
         ).done(function(){
           blobing(result);
-          $(".img-thumbnail").attr("src", result.toDataURL());
+          uploadToS3(blob);
+          
+          image = result.toDataURL('image/jpeg').replace("data:image/png;base64,","");;
+          $(".img-thumbnail").attr("src", result.toDataURL('image/png'));
           $("#trimmingModal").modal('hide');
         });
     });
@@ -88,7 +92,11 @@ $(function () {
     var formData = new FormData();
     console.log("blob: " + blob);
     if (blob != null){
-      formData.append("post[image]", blob);
+      var reader = new FileReader();
+      reader.onload = function(e){
+        formData.append("post[image]", reader.result);
+      };
+      reader.readAsArrayBuffer(blob);
     }
     formData.append("post[title]", $("#titleField").val());
     formData.append("post[name]", $("#nameField").val());
@@ -118,7 +126,7 @@ $(function () {
       $("#postForm")[0].reset();
       window.location = "/posts/" + post.id;
     })
-    .fail(function(XMLHttpRequest, textStatus, errorThrown) {
+    .fail(function(XMLHttpRequest, textresponseStatus, errorThrown) {
       console.log("error");
       console.log("XMLHttpRequest : " + XMLHttpRequest.status);
       console.log("textStatus     : " + textStatus);
@@ -130,4 +138,105 @@ $(function () {
     });
 
   });
+
+  $(document).on('click', "#sightingSubmitButton", function(event) {
+    //event.preventDefault();
+    /* Act on the event */
+    $("#sightingSubmitButton").prop('disabled', true);
+    console.log('submit clicked');
+
+    $.ajaxPrefilter(function(options, originalOptions, jqXHR){
+      var token;
+      if (!options.crossDomain){
+        token = $('meta[name="csrf-token"]').attr('content');
+
+        if (token){
+          return jqXHR.setRequestHeader('X-CSRF-Token', token);
+        }
+      }
+    });
+    console.log($("[name=_method]").val());
+    var formData = new FormData();
+    console.log("blob: " + blob);
+    if (blob != null){
+      formData.append("sighting[image]", blob, 'catblob.png');
+    }
+    if (image != null){
+      //formData.append("sighting[image]", image); 
+    }
+    // formData.append("sighting[title]", $("#titleField").val());
+    // formData.append("sighting[name]", $("#nameField").val());
+    formData.append("sighting[place]", $("#placeField").val());
+    formData.append("sighting[detail]", $("#detailField").val());
+    formData.append("sighting[latitude]", $("#latitudeField").val());
+    formData.append("sighting[longitude]", $("#longitudeField").val());
+    for(item of formData) console.log(item);
+    var url = $("#sightingForm").attr('action');
+    var type = 'POST';
+    if ($("[name=_method]").length){
+      console.log('edit');
+      type = $("[name=_method]").val();
+    }
+
+    $.ajax({
+      url: url,
+      type: type,
+      dataType: 'json',
+      data: formData,
+      processData: false,
+      contentType: false
+    })
+    .done(function(sighting) {
+      console.log("success");
+      console.log(sighting);
+      $("#sightingForm")[0].reset();
+      window.location = "/sightings/" + sighting.id;
+    })
+    .fail(function(response) {
+      console.log("error");
+      console.log(response.responseText);
+      
+      $("#sightingSubmitButton").prop('disabled', false);
+    })
+    .always(function() {
+      console.log("complete");
+    });
+  });
+
+  function catDitection(url){
+    var request = {
+      "requests": [
+        {
+          "features": [
+            {
+              "type": "LABEL_DETECTION"
+            }
+          ],
+          "image": {
+            "source": {
+              "imageUri": url
+            }
+          }
+        }
+      ]
+    };
+    $.ajax({
+      url: "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyDhvCfd03po-fpAZUSrXpWlT1i2qSfHmQ4",
+      type: "POST",
+      // dataType: "json",
+      data: request,
+    })
+    .done(function(response){
+      console.log('success');
+      console.log(response);
+    })
+    .fail(function(response){
+      console.log('error');
+      console.log(response);
+    });
+  }
+
+  function uploadToS3(blob){
+    
+  }
 });

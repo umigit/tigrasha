@@ -1,7 +1,7 @@
 $(function () {
-  // $(document).on('ajax:success', ".button_to", function(event) {
+  $(document).on('ajax:success', ".button_to", function(event) {
     console.log('show.js');
-    // console.log(event.detail[2].response);
+    console.log(event.detail[2].response);
     $("#map").empty();
     var markers = [];
     var marker;
@@ -47,7 +47,11 @@ $(function () {
 
     // map.fitBounds (bounds);
 
-  // });
+  });
+
+  $(document).on('ajax:complete', ".button_to", function(event) {
+    console.log('complete');
+  });
 
   function addListenerToMarker(m_marker, m_info) {
     m_marker.addListener('dragend', function(e){
