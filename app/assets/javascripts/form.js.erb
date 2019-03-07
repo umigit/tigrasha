@@ -25,7 +25,6 @@ $(function () {
   });
 
   var blob = null;
-  var image = null;
   function blobing(croppedCanvas){
     if (croppedCanvas && croppedCanvas.toBlob){
       croppedCanvas.toBlob(function(b){
@@ -55,9 +54,9 @@ $(function () {
           result = cropper.getCroppedCanvas({maxWidth: 1200, maxHeight: 1200})
         ).done(function(){
           blobing(result);
-          uploadToS3(blob);
+          //uploadToS3(blob);
           
-          image = result.toDataURL('image/jpeg').replace("data:image/png;base64,","");;
+          //image = result.toDataURL('image/jpeg').replace("data:image/png;base64,","");;
           $(".img-thumbnail").attr("src", result.toDataURL('image/png'));
           $("#trimmingModal").modal('hide');
         });
@@ -92,11 +91,7 @@ $(function () {
     var formData = new FormData();
     console.log("blob: " + blob);
     if (blob != null){
-      var reader = new FileReader();
-      reader.onload = function(e){
-        formData.append("post[image]", reader.result);
-      };
-      reader.readAsArrayBuffer(blob);
+      formData.append("post[image]", blob, "catblob.png");
     }
     formData.append("post[title]", $("#titleField").val());
     formData.append("post[name]", $("#nameField").val());
@@ -118,7 +113,7 @@ $(function () {
       dataType: 'json',
       data: formData,
       processData: false,
-      contentType: false
+      contentType: false,
     })
     .done(function(post) {
       console.log("success");
@@ -126,11 +121,9 @@ $(function () {
       $("#postForm")[0].reset();
       window.location = "/posts/" + post.id;
     })
-    .fail(function(XMLHttpRequest, textresponseStatus, errorThrown) {
+    .fail(function(response) {
       console.log("error");
-      console.log("XMLHttpRequest : " + XMLHttpRequest.status);
-      console.log("textStatus     : " + textStatus);
-      console.log("errorThrown    : " + errorThrown.message);
+      console.log(response.responseText);
       $("#postSubmitButton").prop('disabled', false);
     })
     .always(function() {
