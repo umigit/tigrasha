@@ -21,7 +21,7 @@
                     %h5= @post.name
                     %h5= @post.lost_date.strftime("%Y年 %-m月 %-d日")
                     %p= @post.detail
-                = button_to "近くの情報を探す", post_path(@post), {remote: true, method: :get, "data-type": "json", format: "json", class: "btn btn-primary mb-2", id: "geo-search"}
+                = button_to "近くの情報を探す", post_path(@post), {remote: true, method: :get, class: "btn btn-primary mb-2", id: "geo-search"}
                 #map.mb-2{"data-latitude": @post.latitude, "data-longitude": @post.longitude}
                 - if current_user.id == @post.user_id
                   = link_to "編集", edit_post_path(@post), class: "card-link"

@@ -9,12 +9,4 @@ class Post < ApplicationRecord
   reverse_geocoded_by :latitude, :longitude
   after_validation :geocode, if: ->(obj){ obj.address.present? and obj.address_changed? }
   after_validation :reverse_geocode, if: ->(obj){ obj.latitude.present? and obj.latitude_changed? }
-
-  def image_filename
-    self.image.filename.to_s if self.image.attached?
-  end
-
-  def image_url
-    self.image.url
-  end
 end

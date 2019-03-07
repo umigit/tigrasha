@@ -7,23 +7,19 @@
           .card-body
             %h1.text-center 目撃情報
             %hr
-            = form_with model: Sighting.new, id: "sightingForm" do |f|
-              .image-box.text-center.mb-2
-                = image_tag "cat_default.png", class: "img-thumbnail"
-                .image-mask
-                  = image_tag "no_image_small.png"
-              .form-group.hidden.d-none
+            = form_with model: Sighting.new, local: true do |f|
+              .form-group.hidden
                 = f.label :写真
                 %br/
                 = f.file_field :image, class: "form-control-file", id: "imageFile", autofocus: true
               .form-group
                 = f.label :"みかけた場所"
                 %br/
-                = f.text_field :place, class: "form-control", id: "placeField"
+                = f.text_field :place, class: "form-control"
               .form-group
                 = f.label :詳細
                 %br/
-                = f.text_area :detail, class: "form-control", rows: 4, id: "detailField"
+                = f.text_area :detail, class: "form-control", rows: 4
               .form-group
                 = f.label :"地図"
                 %br/
@@ -37,5 +33,4 @@
                 %input#search-box.form-control{type: "text"}
               #map.mb-4{"data-location": ""}
               .form-group
-                = f.submit "情報提供する", id: "sightingSubmitButton", class: "btn btn-primary btn-block btn-lg", type: "button"
-        = render "/posts/trim"
+                = f.submit "情報提供する", class: "btn btn-primary btn-block btn-lg", type: "button", onclick: "submit();"
