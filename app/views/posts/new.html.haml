@@ -1,6 +1,6 @@
 = render "/layouts/navbar"
 .bg-image.bg-gray-wall
-  .container.container__main
+  .container.container__main{"data-controller": controller_name, "data-action": action_name}
     .row
       .col-md-8.mx-auto
         .card.my-3.bg-paper
@@ -12,11 +12,11 @@
                 %ul
                 - @post.errors.full_messages.each do |message|
                   %li= message
-            = form_with model: @post do |f|
+            = form_with model: @post, id: "postForm" do |f|
               .form-group
                 = f.label :タイトル
                 %br/
-                = f.text_field :title, class: "form-control"
+                = f.text_field :title, class: "form-control", id: "titleField"
               .image-box.text-center.mb-2
                 = image_tag "cat_default.png", class: "img-thumbnail"
                 .image-mask
@@ -28,15 +28,15 @@
               .form-group
                 = f.label :お名前
                 %br/
-                = f.text_field :name, class: "form-control"
+                = f.text_field :name, class: "form-control", id: "nameField"
               .form-group
                 = f.label :"いなくなった場所・最後に見た場所"
                 %br/
-                = f.text_field :lost_place, class: "form-control"
+                = f.text_field :lost_place, class: "form-control", id: "placeField"
               .form-group
                 = f.label :詳細
                 %br/
-                = f.text_area :detail, class: "form-control", rows: 3
+                = f.text_area :detail, class: "form-control", rows: 3, id: "detailField"
               .form-group
                 = f.label :"地図"
                 %br/
@@ -45,14 +45,6 @@
                 %input#search-box.form-control{type: "text"}
               #map.mb-4
               .form-group
-                = f.submit "張り紙をする", class: "btn btn-primary btn-block btn-lg", type: "button", onclick: "submit();"
-  .modal.modal__trim#trimmingModal{role: "dialog", "data-keyboard": false, "data-backdrop": "static"}
-    .modal-dialog
-      .modal-content.px-3
-        .modal-header
-        .modal-body.px-0
-          = image_tag "", class: "image-trimming"
-        .modal-footer
-          %button.btn.btn-secondary.btn-trimming-back 戻る
-          %button.btn.btn-primary.btn-trimming-confirm 決定
+                = f.submit "張り紙をする", class: "btn btn-primary btn-block btn-lg", id: "postSubmitButton", type: "button"
+        = render "trim"
 

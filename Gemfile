@@ -72,5 +72,9 @@ gem 'ransack'
 gem 'gmaps4rails'
 gem 'geocoder'
 gem 'gon'
+gem 'font-awesome-rails'
+gem 'aws-sdk-s3'
+gem 'carrierwave'
+gem 'fog'
 
 

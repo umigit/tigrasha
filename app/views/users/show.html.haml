@@ -1,1 +1,14 @@
-工事中
+= render "/layouts/navbar"
+.bg-image.bg-wallpaper
+  .mypage.container-fruid.container__main{"data-controller": controller_name, "data-action": action_name}
+    .sidebar.bg-light.mypage__sidebar
+      .sidebar-sticy.mypage__sidebar__content
+        %ul.nav.flex-column.sidebar__list
+          %li.nav-item.sidebar__list__item
+            = link_to "あなたの張り紙", "/users/#{current_user.id}/posts", id: "postsLink", class: "nav-link icon far fa-file", remote: true
+          %li.nav-item.sidebar__list__item
+            = link_to "あなたの目撃情報", "/users/#{current_user.id}/sightings", id: "sightingsLink", class: "nav-link icon fas fa-eye", remote: true
+            - # fa_icon "eye", text: "あなたの目撃情報"
+    .mypage__main-content
+      .content.p-4
+        .row.mypage__result

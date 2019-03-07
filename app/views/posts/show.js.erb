@@ -1,7 +1,6 @@
 $(function () {
-  // $(document).on('ajax:success', ".button_to", function(event) {
+  $(document).on('ajax:success', ".button_to", function(event) {
     console.log('show.js');
-    // console.log(event.detail[2].response);
     $("#map").empty();
     var markers = [];
     var marker;
@@ -15,7 +14,7 @@ $(function () {
 
 
 
-    var postInfo = "<div class-marker-info'>"+ "<h6 class='m-0'><center>YOU</center></h6>" + "<%= escape_javascript(image_tag @post.image, size: '120x120', class: 'img-thumbnail') %>" + "</div>";
+    var postInfo = "<div class-marker-info'>"+ "<h6 class='m-0'><center>YOU</center></h6>" + "<%= escape_javascript(image_tag @post.image.url, size: '120x120', class: 'img-thumbnail') %>" + "</div>";
 
     var infowindow = new google.maps.InfoWindow({content: postInfo});
     infowindow.open(map, marker);
@@ -37,7 +36,7 @@ $(function () {
 
       var postInfo = "<div class-marker-info'>"
 
-      + "<%= escape_javascript(link_to image_tag(sighting.image, size: '100x100', class: 'img-thumbnail'), sighting_path(sighting)) %>"
+      + "<%= escape_javascript(link_to image_tag(sighting.image.url, size: '100x100', class: 'img-thumbnail'), sighting_path(sighting)) %>"
       + "</div>";
 
       addListenerToMarker(marker, postInfo);
@@ -47,7 +46,11 @@ $(function () {
 
     // map.fitBounds (bounds);
 
-  // });
+  });
+
+  $(document).on('ajax:complete', ".button_to", function(event) {
+    console.log('complete');
+  });
 
   function addListenerToMarker(m_marker, m_info) {
     m_marker.addListener('dragend', function(e){

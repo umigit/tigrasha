@@ -1,4 +1,4 @@
-%nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
+%nav.navbar.navbar-expand-lg.navbar-dark.bg-gray.fixed-top.navbar__header
   .container
     .anti-button-blank
     .tigrasha.mx-auto.center-block
@@ -7,7 +7,7 @@
       %span.navbar-toggler-icon
     - if user_signed_in?
       #navbarResponsive.collapse.navbar-collapse
-        %ul.navbar-nav.ml-auto
+        %ul.navbar-nav.ml-auto.navbar__header__list
           .dropdown.nav-item.d-none.d-lg-block
             %a.nav-link.dropdown-toggle#dropdownMenuLink{href: user_path(current_user), "data-toggle": "dropdown", "aria-haspopup": true, "aria-expanded": false} #{current_user.name}
             .dropdown-menu{"area-labelledby": "dropdownMenuLink"}
@@ -23,7 +23,7 @@
             = link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link"
     - else
       #navbarResponsive.collapse.navbar-collapse
-        %ul.navbar-nav.ml-auto
+        %ul.navbar-nav.ml-auto.navbar__header__list
           %li.nav-item
             %a.nav-link{href: posts_path} 張り紙
           %li.nav-item

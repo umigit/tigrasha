@@ -1,8 +1,8 @@
 = render "/layouts/navbar"
-.be-image.bg-gray-wall
-  .container.container__main
+.bg-image.bg-gray-wall
+  .container.container__main{"data-controller": controller_name, "data-action": action_name}
     .row
-      .card.col-lg-6.col-md-8.mx-auto.my-3.bg-paper
+      .card.col-md-8.mx-auto.my-3.bg-paper
         .card-body
           %h1.text-center 張り紙を編集
           %hr
@@ -11,27 +11,31 @@
               %ul
               - @post.errors.full_messages.each do |message|
                 %li= message
-          = form_with model: @post do |f|
+          = form_with model: @post, id: "postForm" do |f|
             .form-group
               = f.label :タイトル
               %br/
-              = f.text_field :title, class: "form-control"
-            .form-group.hidden
+              = f.text_field :title, class: "form-control", id: "titleField"
+            .image-box.text-center.mb-2
+              = image_tag @post.image, class: "img-thumbnail"
+              .image-mask
+                = image_tag "no_image_small.png"
+            .form-group.hidden.d-none
               = f.label :お写真
               %br/
               = f.file_field :image, class: "form-control-file", id: "imageFile"
             .form-group
               = f.label :お名前
               %br/
-              = f.text_field :name, class: "form-control"
+              = f.text_field :name, class: "form-control", id: "nameField"
             .form-group
               = f.label :"いなくなった場所・最後に見た場所"
               %br/
-              = f.text_field :lost_place, class: "form-control"
+              = f.text_field :lost_place, class: "form-control", id: "placeField"
             .form-group
               = f.label :詳細
               %br/
-              = f.text_area :detail, class: "form-control", rows: 3
+              = f.text_area :detail, class: "form-control", rows: 3, id: "detailField"
             .form-group
               = f.label :"地図"
               %br/
@@ -40,4 +44,6 @@
               %input#search-box.form-control{type: "text"}
             #map.mb-4{"data-latitude": @post.latitude, "data-longitude": @post.longitude}
             .form-group
-              = f.submit "張り紙をする", class: "btn btn-primary btn-block btn-lg", type: "button", onclick: "submit();"
+              = f.submit "張り紙をする", class: "btn btn-primary btn-block btn-lg", type: "button", id: "postSubmitButton"
+  }
+  = render "trim"

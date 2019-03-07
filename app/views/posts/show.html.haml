@@ -5,9 +5,9 @@
       .col-12.col-lg-8.mx-auto.my-5
         .card.bg-paper
           .card-body
-            %h1.card-title.text-center.my-1= @post.title
-            - if @post.image.attached?
-              = image_tag @post.image, class: "img-thumbnail", "data-lat": @post.latitude, "data-lng": @post.longitude
+            %h1.card-title.text-center.mb-3.text-danger= @post.title
+            - if @post.image.present?
+              = image_tag @post.image.url, class: "img-thumbnail", "data-lat": @post.latitude, "data-lng": @post.longitude
               .card-text.mt-2
                 .row.mb-3
                   .col-4.col-md-3
@@ -21,8 +21,9 @@
                     %h5= @post.name
                     %h5= @post.lost_date.strftime("%Y年 %-m月 %-d日")
                     %p= @post.detail
-                = button_to "近くの情報を探す", post_path(@post), {remote: true, method: :get, class: "btn btn-primary mb-2", id: "geo-search"}
+                = button_to "近くの情報を探す", post_path(@post), {remote: true, method: :get, "data-type": "json", format: "json", class: "btn btn-primary mb-2", id: "geo-search"}
                 #map.mb-2{"data-latitude": @post.latitude, "data-longitude": @post.longitude}
-                = link_to "編集", edit_post_path(@post), class: "card-link"
-                = link_to "削除", "/posts/#{@post.id})", method: :delete, class: "card-link"
+                - if current_user.id == @post.user_id
+                  = link_to "編集", edit_post_path(@post), class: "card-link"
+                  = link_to "削除", "/posts/#{@post.id})", method: :delete, class: "card-link"
 
