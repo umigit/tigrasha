@@ -6,8 +6,8 @@
         .card.bg-paper
           .card-body
             %h1.card-title.text-center.mb-3.text-danger= @post.title
-            - if @post.image.attached?
-              = image_tag @post.image, class: "img-thumbnail", "data-lat": @post.latitude, "data-lng": @post.longitude
+            - if @post.image.present?
+              = image_tag @post.image.url, class: "img-thumbnail", "data-lat": @post.latitude, "data-lng": @post.longitude
               .card-text.mt-2
                 .row.mb-3
                   .col-4.col-md-3

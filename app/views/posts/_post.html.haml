@@ -1,8 +1,8 @@
 .col-lg-4.col-md-6.mb-4
   .card.bg-paper.px-3
     %h5.card-title.text-center.mt-2.mb-1.text-danger= post.title
-    - if post.image.attached?
-      = link_to image_tag(post.image, class: "img-thumbnail"), post_path(post)
+    - if post.image.present?
+      = link_to image_tag(post.image.url, class: "img-thumbnail"), post_path(post)
       .card-body
         %p.m-0 場所: #{post.lost_place}
         %p.m-0 お名前: #{post.name}
