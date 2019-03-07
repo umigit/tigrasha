@@ -7,4 +7,15 @@ $(function () {
     console.log(event.detail);
     $(".mypage__result").html(event.detail[2].response);
   });
+
+  $(document).on('ajax:complete', '.delete', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    console.log(event.detail[0].response);
+    var sighting = JSON.parse(event.detail[0].response);
+    var id = sighting.id;
+    console.log(id);
+    $("#sightingContainer-" + id).css('display', 'none');
+    $("#sightingContainer-" + id).val('消えろ');
+  });
 });
