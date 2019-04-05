@@ -7,3 +7,6 @@
           .card-body
             - if @sighting.image.present?
               = image_tag @sighting.image.url, class: "img-thumbnail", "data-lat": @sighting.latitude, "data-lng": @sighting.longitude
+            %p.mt-3 場所: #{@sighting.place}
+            %p 詳細:
+            %p.card-text #{@labels}

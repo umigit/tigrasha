@@ -23,7 +23,7 @@
                     %p= @post.detail
                 = button_to "近くの情報を探す", post_path(@post), {remote: true, method: :get, "data-type": "json", format: "json", class: "btn btn-primary mb-2", id: "geo-search"}
                 #map.mb-2{"data-latitude": @post.latitude, "data-longitude": @post.longitude}
-                - if current_user.id == @post.user_id
-                  = link_to "編集", edit_post_path(@post), class: "card-link"
-                  = link_to "削除", "/posts/#{@post.id})", method: :delete, class: "card-link"
+              - if current_user.id == @post.user_id
+                = link_to "編集", edit_post_path(@post), class: "card-link"
+                = link_to "削除", "/posts/#{@post.id})", method: :delete, class: "card-link"
 
