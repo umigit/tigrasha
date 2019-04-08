@@ -1,0 +1,11 @@
+= render "/layouts/navbar"
+.bg-image.bg-gray-wall
+  .container.container__main
+    .row
+      .col-lg-12.mt-4
+        .row
+          = render @posts
+    .footer.fixed-bottom
+      .container
+        = button_to "張り紙をする", new_post_path, method: :get, class: "nav-item btn btn-primary mb-2 mr-2 float-right"
+

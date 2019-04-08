@@ -1,0 +1,12 @@
+.col-lg-4.col-md-6.mb-4{id: "sightingContainer-#{sighting.id}"}
+  .card.bg-paper.sighting__summary
+    = image_tag sighting.image.url, class: "card-img-top"
+    .card-body.sighting__summary__body
+      .dropdown
+      = link_to "", "",role: "button", class: "dropdown-toggle icon fa-cog text-gray sighting__summary__body__dropdown", id: "drpodownMenulink", "data-toggle": "dropdown", "aria-haspopup": true, "aria-expanded": false
+      .dropdown-menu-right.dropdown-menu{"aria-labelledby": "dropdownMenuLink"}
+        = link_to "詳細", sighting_path(sighting), class: "dropdown-item"
+        - if current_user.id == sighting.user_id
+          = link_to "削除", "/sightings/#{sighting.id}", class: "dropdown-item delete", method: :delete, remote: true, format: "json", "data-type": "json"
+      %p.m-0 場所: #{sighting.place}
+      %p.m-0 #{sighting.date.strftime("%Y年 %-m月 %-d日")}

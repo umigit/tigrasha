@@ -1,0 +1,233 @@
+$(function () {
+  $(".image-box").on('click', function(event) {
+    event.preventDefault();
+    $("#imageFile").click();
+  });
+
+  $("#imageFile").on('change', function(event) {
+    console.log('image file changed');
+    if ($("#imageFile")[0].files[0] === undefined){
+      $(".img-thumbnail").attr("src", "<%= image_path('cat_default.png') %>");
+      return false;
+    }
+
+
+    console.log($("#imageFile")[0].files[0]);
+    var image = $("#imageFile")[0].files[0];
+    var reader = new FileReader();
+    reader.onload = function(e){
+      // $(".img-thumbnail").attr("src", e.target.result);
+      $(".image-trimming").attr("src", e.target.result);
+      $("#trimmingModal").modal();
+    };
+
+    reader.readAsDataURL(image);
+  });
+
+  var blob = null;
+  function blobing(croppedCanvas){
+    if (croppedCanvas && croppedCanvas.toBlob){
+      croppedCanvas.toBlob(function(b){
+        blob = b;
+      });
+    }else if(croppedCanvas && croppedCanvas.msToBlob){
+      blob = croppedCanvas.msToBlob();
+    }else{
+      blob = null;
+    }
+  }
+
+  $(document).on('shown.bs.modal', ".modal", function() {
+    var image = $(".image-trimming")[0];
+    console.log('shown.bs.modal');
+    // console.log(image);
+    var options = {aspectRatio: 4 / 3,
+                      dragMode: 'move',
+                      zoomable: false
+                  };
+    var cropper = new Cropper(image, options);
+    // console.log(cropper);
+    $(document).one('click', ".btn-trimming-confirm", function(event) {
+      var result;
+      $.when(
+          //ちょっと時間かかるっぽい
+          result = cropper.getCroppedCanvas({maxWidth: 1200, maxHeight: 1200})
+        ).done(function(){
+          blobing(result);
+          //uploadToS3(blob);
+
+          //image = result.toDataURL('image/jpeg').replace("data:image/png;base64,","");;
+          $(".img-thumbnail").attr("src", result.toDataURL('image/png'));
+          $("#trimmingModal").modal('hide');
+        });
+    });
+
+    $(document).one('click', ".btn-trimming-back", function(event) {
+      $("#trimmingModal").modal('hide');
+    });
+
+    $(this).one('hidden.bs.modal', function(event) {
+      cropper.destroy();
+    });
+  });
+
+  $(document).on('click', "#postSubmitButton", function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    $("#postSubmitButton").prop('disabled', true);
+    console.log('submit clicked');
+
+    $.ajaxPrefilter(function(options, originalOptions, jqXHR){
+      var token;
+      if (!options.crossDomain){
+        token = $('meta[name="csrf-token"]').attr('content');
+
+        if (token){
+          return jqXHR.setRequestHeader('X-CSRF-Token', token);
+        }
+      }
+    });
+    console.log($("[name=_method]").val());
+    var formData = new FormData();
+    console.log("blob: " + blob);
+    if (blob != null){
+      formData.append("post[image]", blob, "catblob.png");
+    }
+    formData.append("post[title]", $("#titleField").val());
+    formData.append("post[name]", $("#nameField").val());
+    formData.append("post[lost_place]", $("#placeField").val());
+    formData.append("post[detail]", $("#detailField").val());
+    formData.append("post[latitude]", $("#latitudeField").val());
+    formData.append("post[longitude]", $("#longitudeField").val());
+    for(item of formData) console.log(item);
+    var url = $("#postForm").attr('action');
+    var type = 'POST';
+    if ($("[name=_method]").length){
+      console.log('edit');
+      type = $("[name=_method]").val();
+    }
+
+    $.ajax({
+      url: url,
+      type: type,
+      dataType: 'json',
+      data: formData,
+      processData: false,
+      contentType: false,
+    })
+    .done(function(post) {
+      console.log("success");
+      console.log(post);
+      $("#postForm")[0].reset();
+      window.location = "/posts/" + post.id;
+    })
+    .fail(function(response) {
+      console.log("error");
+      console.log(response.responseText);
+      $("#postSubmitButton").prop('disabled', false);
+    })
+    .always(function() {
+      console.log("complete");
+    });
+
+  });
+
+  $(document).on('click', "#sightingSubmitButton", function(event) {
+    //event.preventDefault();
+    /* Act on the event */
+    $("#sightingSubmitButton").prop('disabled', true);
+    console.log('submit clicked');
+
+    $.ajaxPrefilter(function(options, originalOptions, jqXHR){
+      var token;
+      if (!options.crossDomain){
+        token = $('meta[name="csrf-token"]').attr('content');
+
+        if (token){
+          return jqXHR.setRequestHeader('X-CSRF-Token', token);
+        }
+      }
+    });
+    console.log($("[name=_method]").val());
+    var formData = new FormData();
+    console.log("blob: " + blob);
+    if (blob != null){
+      formData.append("sighting[image]", blob, 'catblob.png');
+    }
+
+    // formData.append("sighting[title]", $("#titleField").val());
+    // formData.append("sighting[name]", $("#nameField").val());
+    formData.append("sighting[place]", $("#placeField").val());
+    formData.append("sighting[detail]", $("#detailField").val());
+    formData.append("sighting[latitude]", $("#latitudeField").val());
+    formData.append("sighting[longitude]", $("#longitudeField").val());
+    for(item of formData) console.log(item);
+    var url = $("#sightingForm").attr('action');
+    var type = 'POST';
+    if ($("[name=_method]").length){
+      console.log('edit');
+      type = $("[name=_method]").val();
+    }
+
+    $.ajax({
+      url: url,
+      type: type,
+      dataType: 'json',
+      data: formData,
+      processData: false,
+      contentType: false
+    })
+    .done(function(sighting) {
+      console.log("success");
+      console.log(sighting);
+      $("#sightingForm")[0].reset();
+      window.location = "/sightings/" + sighting.id;
+    })
+    .fail(function(response) {
+      console.log("error");
+      console.log(response.responseText);
+
+      $("#sightingSubmitButton").prop('disabled', false);
+    })
+    .always(function() {
+      console.log("complete");
+    });
+  });
+
+  function catDitection(url){
+    var request = {
+      "requests": [
+        {
+          "features": [
+            {
+              "type": "LABEL_DETECTION"
+            }
+          ],
+          "image": {
+            "source": {
+              "imageUri": url
+            }
+          }
+        }
+      ]
+    };
+    $.ajax({
+      url: "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyDhvCfd03po-fpAZUSrXpWlT1i2qSfHmQ4",
+      type: "POST",
+      // dataType: "json",
+      data: request,
+    })
+    .done(function(response){
+      console.log('success');
+      console.log(response);
+    })
+    .fail(function(response){
+      console.log('error');
+      console.log(response);
+    });
+  }
+
+  function uploadToS3(blob){
+
+  }
+});

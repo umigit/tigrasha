@@ -1,0 +1,31 @@
+%nav.navbar.navbar-expand-lg.navbar-dark.bg-gray.fixed-top.navbar__header
+  .container
+    .anti-button-blank
+    .tigrasha.mx-auto.center-block
+      %a.navbar-brand.m-0{href: root_path} Tigrasha
+    %button.navbar-toggler{"aria-controls" => "navbarResponsive", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarResponsive", "data-toggle" => "collapse", :type => "button"}
+      %span.navbar-toggler-icon
+    - if user_signed_in?
+      #navbarResponsive.collapse.navbar-collapse
+        %ul.navbar-nav.ml-auto.navbar__header__list
+          .dropdown.nav-item.d-none.d-lg-block
+            %a.nav-link.dropdown-toggle#dropdownMenuLink{href: user_path(current_user), "data-toggle": "dropdown", "aria-haspopup": true, "aria-expanded": false} #{current_user.name}
+            .dropdown-menu{"area-labelledby": "dropdownMenuLink"}
+              = link_to "マイページ", user_path(current_user), class: 'dropdown-item'
+              = link_to "ログアウト", destroy_user_session_path, method: :delete, class: "dropdown-item"
+          %li.nav-item
+            %a.nav-link{href: posts_path} 張り紙
+          %li.nav-item
+            %a.nav-link{href: sightings_path} 目撃情報
+          %li.nav-item.d-block.d-lg-none
+            = link_to "マイページ", user_path(current_user), class: 'nav-link '
+          %li.nav-item.d-block.d-lg-none
+            = link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link"
+    - else
+      #navbarResponsive.collapse.navbar-collapse
+        %ul.navbar-nav.ml-auto.navbar__header__list
+          %li.nav-item
+            %a.nav-link{href: posts_path} 張り紙
+          %li.nav-item
+            %a.nav-link{href: sightings_path} 目撃情報
+.nav-margin

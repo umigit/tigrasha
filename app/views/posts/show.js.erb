@@ -1,0 +1,74 @@
+$(function () {
+  $(document).on('ajax:success', ".button_to", function(event) {
+    console.log('show.js');
+    $("#map").empty();
+    var markers = [];
+    var marker;
+    var bounds = new google.maps.LatLngBounds();
+    var position = {lat: $(".img-thumbnail").data('lat'), lng: $(".img-thumbnail").data('lng')};
+    // var position = map.getCenter();
+    console.log(position);
+    var map = new google.maps.Map($("#map")[0], {center: position, zoom: 14});
+
+    marker = new google.maps.Marker({position: position, map: map, draggable: true});
+
+
+
+    var postInfo = "<div class-marker-info'>"+ "<h6 class='m-0'><center>YOU</center></h6>" + "<%= escape_javascript(image_tag @post.image.url, size: '120x120', class: 'img-thumbnail') %>" + "</div>";
+
+    var infowindow = new google.maps.InfoWindow({content: postInfo});
+    infowindow.open(map, marker);
+    marker.addListener('dragend', function(e){
+      map.panTo(e.latLng);
+      $("#latitudeField").val(e.latLng.lat);
+      $("#longitudeField").val(e.latLng.lng);
+    });
+
+    marker.addListener('click', function(e){
+      infowindow.open(map, this);
+    });
+    markers.push(marker);
+    // bounds.extend (marker.position);
+
+    <% @sightings.each do |sighting| %>
+      marker = new google.maps.Marker({map: map, draggable: true});
+      marker.setPosition({lat: <%= sighting.latitude%>, lng: <%= sighting.longitude%>});
+
+      var postInfo = "<div class-marker-info'>"
+
+      + "<%= escape_javascript(link_to image_tag(sighting.image.url, size: '100x100', class: 'img-thumbnail'), sighting_path(sighting)) %>"
+      + "</div>";
+
+      addListenerToMarker(marker, postInfo);
+      // bounds.extend (marker.position);
+      markers.push(marker);
+    <% end %>
+
+    // map.fitBounds (bounds);
+
+  });
+
+  $(document).on('ajax:complete', ".button_to", function(event) {
+    console.log('complete');
+  });
+
+  function addListenerToMarker(m_marker, m_info) {
+    m_marker.addListener('dragend', function(e){
+      map.panTo(e.latLng);
+      $("#latitudeField").val(e.latLng.lat);
+      $("#longitudeField").val(e.latLng.lng);
+    });
+
+    var infowindow = new google.maps.InfoWindow({content: m_info});
+      infowindow.open(map, m_marker);
+
+    m_marker.addListener('click', function(e){
+      infowindow.open(map, this);
+    });
+  }
+});
+
+
+
+
+
