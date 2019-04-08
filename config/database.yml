@@ -49,6 +49,9 @@ test:
 #
 production:
   <<: *default
-  database: tigrasha_production
-  username: tigrasha
-  password: <%= ENV['TIGRASHA_DATABASE_PASSWORD'] %>
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  # database: tigrasha_production
+  # username: tigrasha
+  # password: <%= ENV['TIGRASHA_DATABASE_PASSWORD'] %>
