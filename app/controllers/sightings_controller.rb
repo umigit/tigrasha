@@ -11,6 +11,7 @@ class SightingsController < ApplicationController
 
   def show
     @sighting = Sighting.find(params[:id])
+    @labels = @sighting.cat?
   end
 
   def new
@@ -27,9 +28,8 @@ class SightingsController < ApplicationController
     end
   end
 
-  def upload
-    @image = Image.new(image_params)
-    @image.save
+  def update
+    @sighting = Sighting.find(params[:id])
   end
 
   def destroy

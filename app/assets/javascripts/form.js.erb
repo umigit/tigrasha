@@ -55,7 +55,7 @@ $(function () {
         ).done(function(){
           blobing(result);
           //uploadToS3(blob);
-          
+
           //image = result.toDataURL('image/jpeg').replace("data:image/png;base64,","");;
           $(".img-thumbnail").attr("src", result.toDataURL('image/png'));
           $("#trimmingModal").modal('hide');
@@ -154,7 +154,7 @@ $(function () {
     if (blob != null){
       formData.append("sighting[image]", blob, 'catblob.png');
     }
-    
+
     // formData.append("sighting[title]", $("#titleField").val());
     // formData.append("sighting[name]", $("#nameField").val());
     formData.append("sighting[place]", $("#placeField").val());
@@ -186,7 +186,7 @@ $(function () {
     .fail(function(response) {
       console.log("error");
       console.log(response.responseText);
-      
+
       $("#sightingSubmitButton").prop('disabled', false);
     })
     .always(function() {
@@ -228,6 +228,6 @@ $(function () {
   }
 
   function uploadToS3(blob){
-    
+
   }
 });

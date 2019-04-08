@@ -17,7 +17,7 @@
               %br/
               = f.text_field :title, class: "form-control", id: "titleField"
             .image-box.text-center.mb-2
-              = image_tag @post.image, class: "img-thumbnail"
+              = image_tag @post.image.url, class: "img-thumbnail"
               .image-mask
                 = image_tag "no_image_small.png"
             .form-group.hidden.d-none
