@@ -5,6 +5,5 @@ Rails.application.routes.draw do
   resources :users, only: [:show]
     get 'users/:id/sightings' => 'users#sightings'
     get 'users/:id/posts' => 'users#posts'
-  resources :sightings 
-  
+  resources :sightings
 end

@@ -81,5 +81,3 @@ gem 'aws-sdk-s3'
 gem 'carrierwave'
 gem 'fog'
 gem 'google-cloud-vision'
-
-
